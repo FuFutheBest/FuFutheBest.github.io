@@ -56,17 +56,15 @@ Welcome to my personal blog! I write about my experiences, projects, and thought
 ## 🧠 About Me
 
 - 🎓 **B.S. in Software Engineering**, Shanghai Jiao Tong University (2024–Present)
-- ☕️ **M.S. in Stack Overflow Studies**, School of Midnight Coding (earned at 3 a.m.)
-- 🧑‍💻 **PhD in Debugging**, GitHub University _(still submitting my thesis via pull requests)_
 
----
-
-## 🧰 Tech Toolbox
-
-- 💻 **Programming languages**: C/C++, Python, MATLAB
-- 📚 **Currently learning**: Functional programming, Game design, Data structures
-- 🎮 **Interests**: AI, Machine Learning, Game Development
-- 🔍 **Special skills**: Googling error messages like a pro
+<!-- --- -->
+<!---->
+<!-- ## 🧰 Tech Toolbox -->
+<!---->
+<!-- - 💻 **Programming languages**: C/C++, Python, MATLAB -->
+<!-- - 📚 **Currently learning**: Functional programming, Game design, Data structures -->
+<!-- - 🎮 **Interests**: AI, Machine Learning, Game Development -->
+<!-- - 🔍 **Special skills**: Googling error messages like a pro -->
 
 ---
 
