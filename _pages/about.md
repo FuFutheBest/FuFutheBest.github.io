@@ -70,11 +70,11 @@ Welcome to my personal blog! I write about my experiences, projects, and thought
 
 ## ✍️ Recent Posts
 
-<!-- > 👇 Here are some of my latest posts. For more, check out the [full archive](./posts) -->
-<!---->
-<!-- - [Post Title 1](./posts/article-1.md) – short description or date -->
-<!-- - [Post Title 2](./posts/article-2.md) – short description or date -->
-<!-- - [Post Title 3](./posts/article-3.md) – short description or date -->
+> 👇 Here are some of my latest posts. <!-- For more, check out the [full archive](./posts) -->
+
+- [Ghostbust Hotline](/portfolio/Ghostbust_Hotline/) – A 2D dungeon-crawling shooter RPG.
+  <!-- - [Post Title 2](./posts/article-2.md) – short description or date -->
+  <!-- - [Post Title 3](./posts/article-3.md) – short description or date -->
 
 ---
 
