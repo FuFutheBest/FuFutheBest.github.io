@@ -13,30 +13,30 @@ redirect_from:
 
 - 🎓 B.S. in Software Engineering, Shanghai Jiao Tong University (2024–Present)
 
-# Work experience
-
-- Spring 2024: Academic Pages Collaborator
-
-  - GitHub University
-  - Duties includes: Updates and improvements to template
-  - Supervisor: The Users
-
-- Fall 2015: Research Assistant
-
-  - GitHub University
-  - Duties included: Merging pull requests
-  - Supervisor: Professor Hub
-
-- Summer 2015: Research Assistant
-  - GitHub University
-  - Duties included: Tagging issues
-  - Supervisor: Professor Git
-
-# Skills
-
-```java
-throw new UnsupportedOperationException;
-```
+<!-- # Work experience -->
+<!---->
+<!-- - Spring 2024: Academic Pages Collaborator -->
+<!---->
+<!--   - GitHub University -->
+<!--   - Duties includes: Updates and improvements to template -->
+<!--   - Supervisor: The Users -->
+<!---->
+<!-- - Fall 2015: Research Assistant -->
+<!---->
+<!--   - GitHub University -->
+<!--   - Duties included: Merging pull requests -->
+<!--   - Supervisor: Professor Hub -->
+<!---->
+<!-- - Summer 2015: Research Assistant -->
+<!--   - GitHub University -->
+<!--   - Duties included: Tagging issues -->
+<!--   - Supervisor: Professor Git -->
+<!---->
+<!-- # Skills -->
+<!---->
+<!-- ```java -->
+<!-- throw new UnsupportedOperationException; -->
+<!-- ``` -->
 
 <!-- - Skill 1 -->
 <!-- - Skill 2 -->
@@ -45,11 +45,11 @@ throw new UnsupportedOperationException;
 <!--   - Sub-skill 2.3 -->
 <!-- - Skill 3 -->
 
-# Publications
-
-```java
-throw new UnsupportedOperationException;
-```
+<!-- # Publications -->
+<!---->
+<!-- ```java -->
+<!-- throw new UnsupportedOperationException; -->
+<!-- ``` -->
 
 <!-- ====== -->
 <!--   <ul>{% for post in site.publications reversed %} -->
@@ -63,11 +63,11 @@ throw new UnsupportedOperationException;
 <!--   {% endfor %}</ul> -->
 <!--    -->
 
-# Teaching
-
-```java
-throw new UnsupportedOperationException;
-```
+<!-- # Teaching -->
+<!---->
+<!-- ```java -->
+<!-- throw new UnsupportedOperationException; -->
+<!-- ``` -->
 
 <!-- ====== -->
 <!--   <ul>{% for post in site.teaching reversed %} -->
@@ -75,11 +75,11 @@ throw new UnsupportedOperationException;
 <!--   {% endfor %}</ul> -->
 <!--    -->
 
-# Service and leadership
-
-```java
-throw new UnsupportedOperationException;
-```
+<!-- # Service and leadership -->
+<!---->
+<!-- ```java -->
+<!-- throw new UnsupportedOperationException; -->
+<!-- ``` -->
 
 <!-- ====== -->
 <!-- * Currently signed in to 43 different slack teams -->
