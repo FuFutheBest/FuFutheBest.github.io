@@ -12,39 +12,58 @@ excerpt: "A comprehensive cheat sheet for keybindings across Gnome, WezTerm, and
 
 <!-- Search Bar Styles -->
 <style>
+/* Global Enhancements */
+body {
+  line-height: 1.7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Enhanced Search Container */
 .search-container {
   position: sticky;
-  top: 60px;
+  top: 70px;
   z-index: 1000;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
-  border: 2px solid #e3f2fd;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  margin-bottom: 40px;
+  border: none;
+  backdrop-filter: blur(10px);
 }
 
 .search-box {
   width: 100%;
-  padding: 15px 20px;
+  padding: 18px 25px;
   font-size: 16px;
-  border: 2px solid #ddd;
-  border-radius: 25px;
+  border: none;
+  border-radius: 50px;
   outline: none;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .search-box:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.search-box::placeholder {
+  color: #666;
+  font-style: italic;
 }
 
 .search-stats {
-  margin-top: 10px;
-  color: #7f8c8d;
+  margin-top: 15px;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 14px;
   text-align: center;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .clear-search {
@@ -52,31 +71,244 @@ excerpt: "A comprehensive cheat sheet for keybindings across Gnome, WezTerm, and
   right: 35px;
   top: 50%;
   transform: translateY(-50%);
-  background: #e74c3c;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
   color: white;
   border: none;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: bold;
   display: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(238, 90, 82, 0.3);
 }
 
+.clear-search:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 15px rgba(238, 90, 82, 0.5);
+}
+
+/* Enhanced Table Styles */
+table {
+  margin: 25px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  background: white;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+thead th {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+  font-weight: 600;
+  padding: 16px 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 13px;
+  position: relative;
+}
+
+thead th:first-child {
+  border-radius: 12px 0 0 0;
+}
+
+thead th:last-child {
+  border-radius: 0 12px 0 0;
+}
+
+tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+tbody tr:hover {
+  background: linear-gradient(135deg, #f8f9ff, #e8f4f8);
+  transform: scale(1.002);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+tbody tr:last-child:hover td:first-child {
+  border-radius: 0 0 0 12px;
+}
+
+tbody tr:last-child:hover td:last-child {
+  border-radius: 0 0 12px 0;
+}
+
+tbody td {
+  padding: 14px 20px;
+  vertical-align: top;
+}
+
+/* Enhanced Heading Styles */
+h1 {
+  text-align: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin: 30px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 20px 25px;
+  border-radius: 12px;
+  margin: 40px 0 25px 0;
+  font-size: 1.6em;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.8s;
+}
+
+h2:hover::before {
+  left: 100%;
+}
+
+h3 {
+  color: #2c3e50;
+  border-left: 5px solid #3498db;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 0 8px 8px 0;
+  margin: 30px 0 20px 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+h4 {
+  color: #34495e;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 25px 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+/* Enhanced Blockquote */
+blockquote {
+  background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+  border-left: 5px solid #27ae60;
+  padding: 20px 25px;
+  margin: 25px 0;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 2px 10px rgba(39, 174, 96, 0.1);
+  position: relative;
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 4em;
+  color: rgba(39, 174, 96, 0.1);
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-family: serif;
+}
+
+/* Enhanced KBD styling - Note: No click functionality */
+kbd {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 2px solid #ced4da;
+  border-radius: 6px;
+  box-shadow: 0 3px 0 #adb5bd, 0 0 0 1px rgba(0,0,0,0.1);
+  color: #495057;
+  display: inline-block;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 1;
+  padding: 6px 10px;
+  margin: 0 3px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  transition: all 0.2s ease;
+  /* Preserve original case - no text-transform */
+}
+
+kbd:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #adb5bd, 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Highlight Effects */
 .highlight {
-  background-color: #fff3cd;
-  padding: 2px 4px;
-  border-radius: 3px;
-  font-weight: bold;
-  border: 1px solid #ffeaa7;
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-weight: 700;
+  border: 2px solid #f39c12;
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+  animation: highlightPulse 1.5s ease-in-out;
+}
+
+@keyframes highlightPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .hidden-row {
   display: none;
 }
 
-tr:hover {
-  background-color: #f8f9ff;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 15px -10px 25px -10px;
+    border-radius: 0;
+    top: 0;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  table {
+    font-size: 14px;
+  }
+  
+  thead th, tbody td {
+    padding: 10px 12px;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
 </style>
 
@@ -87,7 +319,7 @@ tr:hover {
       type="text" 
       id="searchInput" 
       class="search-box" 
-      placeholder="🔍 Search shortcuts, actions, or descriptions... (e.g., 'split', 'SUPER+B', 'terminal')"
+      placeholder="🔍 Search shortcuts, actions, or descriptions... (try 'split', 'SUPER+B', 'terminal')"
       autocomplete="off"
     >
     <button id="clearSearch" class="clear-search" title="Clear search">×</button>
@@ -95,13 +327,39 @@ tr:hover {
   <div id="searchStats" class="search-stats"></div>
 </div>
 
-A comprehensive reference for all my customized keyboard shortcuts across different applications.
+# 🎮 Personal Keybindings Cheat Sheet
 
-> 📝 **Legend**:
+<div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; border: 2px solid #dee2e6;">
+  <p style="font-size: 1.2em; color: #495057; margin: 0; font-weight: 500;">
+    ⚡ A comprehensive reference for all my customized keyboard shortcuts across different applications
+  </p>
+  <p style="font-size: 0.95em; color: #6c757d; margin: 10px 0 0 0; font-style: italic;">
+    💡 Boost your productivity with lightning-fast navigation and control
+  </p>
+</div>
+
+> 📝 **Legend & Quick Guide**:
 >
-> - <kbd>SUPER</kbd> = Windows/Cmd key
-> - <kbd>LEADER</kbd> = Leader key sequence
-> - Actions marked with 🔧 are custom configurations
+> <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 15px 0;">
+>   <div style="background: #e8f4f8; padding: 12px; border-radius: 8px; border-left: 4px solid #3498db;">
+>     <strong>🔑 Key Symbols:</strong><br>
+>     <kbd>SUPER</kbd> = Windows/Cmd key<br>
+>     <kbd>LEADER</kbd> = Leader key sequence
+>   </div>
+>   <div style="background: #fff3e0; padding: 12px; border-radius: 8px; border-left: 4px solid #ff9800;">
+>     <strong>⚙️ Configuration:</strong><br>
+>     Actions marked with 🔧 are custom configurations
+>   </div>
+> </div>
+>
+> <div style="background: #f0f8e8; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin-top: 15px;">
+>   <strong>💡 Pro Tips:</strong>
+>   <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+>     <li>Use <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd> to quickly focus the search box above</li>
+>     <li>Search by application name, key combination, or action description</li>
+>     <li>Press <kbd>Esc</kbd> to clear search and show all shortcuts</li>
+>   </ul>
+> </div>
 
 ## 🖥️ Gnome Desktop Environment
 
@@ -504,12 +762,13 @@ A comprehensive reference for all my customized keyboard shortcuts across differ
 
 <!-- Search Functionality -->
 <script>
-// Search functionality
+// Enhanced search functionality (without click-to-copy)
 const searchInput = document.getElementById('searchInput');
 const clearButton = document.getElementById('clearSearch');
 const searchStats = document.getElementById('searchStats');
 let allRows = [];
 let totalResults = 0;
+let searchHistory = [];
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -519,7 +778,38 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   updateSearchStats();
+  initializeEnhancements();
 });
+
+// Initialize additional enhancements (without click-to-copy)
+function initializeEnhancements() {
+  // Add loading animation to search box
+  searchInput.addEventListener('focus', function() {
+    this.style.transform = 'translateY(-2px)';
+  });
+  
+  searchInput.addEventListener('blur', function() {
+    this.style.transform = 'translateY(0)';
+  });
+  
+  // Add smooth scroll to first result
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && totalResults > 0) {
+      const firstVisibleRow = allRows.find(row => !row.classList.contains('hidden-row'));
+      if (firstVisibleRow) {
+        firstVisibleRow.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+        // Add temporary highlight to first result
+        firstVisibleRow.style.animation = 'highlightPulse 2s ease-in-out';
+        setTimeout(() => {
+          firstVisibleRow.style.animation = '';
+        }, 2000);
+      }
+    }
+  });
+}
 
 // Debounce function to improve performance
 function debounce(func, wait) {
@@ -534,16 +824,22 @@ function debounce(func, wait) {
   };
 }
 
-// Remove previous highlights
+// Remove previous highlights with animation
 function removeHighlights() {
   document.querySelectorAll('.highlight').forEach(el => {
-    const parent = el.parentNode;
-    parent.replaceChild(document.createTextNode(el.textContent), el);
-    parent.normalize();
+    el.style.transition = 'all 0.3s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'scale(0.8)';
+    
+    setTimeout(() => {
+      const parent = el.parentNode;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+      parent.normalize();
+    }, 300);
   });
 }
 
-// Highlight search terms
+// Enhanced highlight with animation
 function highlightText(element, searchTerm) {
   if (!searchTerm.trim()) return;
   
@@ -565,7 +861,7 @@ function highlightText(element, searchTerm) {
     const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     
     if (regex.test(text)) {
-      const highlightedHTML = text.replace(regex, '<span class="highlight">$1</span>');
+      const highlightedHTML = text.replace(regex, '<span class="highlight" style="opacity: 0; transform: scale(0.8);">$1</span>');
       const wrapper = document.createElement('div');
       wrapper.innerHTML = highlightedHTML;
       
@@ -575,19 +871,46 @@ function highlightText(element, searchTerm) {
       textNode.remove();
     }
   });
+  
+  // Animate highlights
+  setTimeout(() => {
+    document.querySelectorAll('.highlight').forEach((highlight, index) => {
+      setTimeout(() => {
+        highlight.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        highlight.style.opacity = '1';
+        highlight.style.transform = 'scale(1)';
+      }, index * 50);
+    });
+  }, 100);
 }
 
-// Search function
+// Enhanced search function with animations
 function performSearch() {
   const searchTerm = searchInput.value.toLowerCase().trim();
+  
+  // Add to search history
+  if (searchTerm && !searchHistory.includes(searchTerm)) {
+    searchHistory.unshift(searchTerm);
+    searchHistory = searchHistory.slice(0, 10); // Keep last 10 searches
+  }
+  
   removeHighlights();
   totalResults = 0;
 
   if (!searchTerm) {
-    // Show all rows if search is empty
-    allRows.forEach(row => {
+    // Show all rows with fade-in animation
+    allRows.forEach((row, index) => {
       row.classList.remove('hidden-row');
+      row.style.opacity = '0';
+      row.style.transform = 'translateY(10px)';
+      
+      setTimeout(() => {
+        row.style.transition = 'all 0.3s ease';
+        row.style.opacity = '1';
+        row.style.transform = 'translateY(0)';
+      }, index * 20);
     });
+    
     clearButton.style.display = 'none';
     updateSearchStats();
     return;
@@ -595,7 +918,8 @@ function performSearch() {
 
   clearButton.style.display = 'block';
 
-  allRows.forEach(row => {
+  // Search with animations
+  allRows.forEach((row, index) => {
     const rowText = row.textContent.toLowerCase();
     const isMatch = rowText.includes(searchTerm);
     
@@ -603,48 +927,102 @@ function performSearch() {
       row.classList.remove('hidden-row');
       highlightText(row, searchTerm);
       totalResults++;
+      
+      // Animate visible rows
+      row.style.opacity = '0';
+      row.style.transform = 'translateX(-20px)';
+      
+      setTimeout(() => {
+        row.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        row.style.opacity = '1';
+        row.style.transform = 'translateX(0)';
+      }, index * 30);
     } else {
-      row.classList.add('hidden-row');
+      // Animate hiding rows
+      row.style.transition = 'all 0.3s ease';
+      row.style.opacity = '0';
+      row.style.transform = 'translateX(20px)';
+      
+      setTimeout(() => {
+        row.classList.add('hidden-row');
+        row.style.transform = 'translateX(0)';
+      }, 300);
     }
   });
 
   updateSearchStats();
 }
 
-// Update search statistics
+// Enhanced search statistics with animations
 function updateSearchStats() {
-  if (!searchInput.value.trim()) {
-    searchStats.textContent = `Ready to search ${allRows.length} shortcuts`;
-    searchStats.style.color = '#7f8c8d';
-  } else if (totalResults === 0) {
-    searchStats.textContent = 'No results found';
-    searchStats.style.color = '#e74c3c';
-  } else {
-    searchStats.textContent = `Found ${totalResults} result${totalResults !== 1 ? 's' : ''}`;
-    searchStats.style.color = '#27ae60';
-  }
+  const statsText = !searchInput.value.trim() 
+    ? `Ready to search ${allRows.length} shortcuts`
+    : totalResults === 0 
+      ? 'No results found - try different keywords'
+      : `Found ${totalResults} result${totalResults !== 1 ? 's' : ''} • Press Enter to jump to first`;
+  
+  const statsColor = !searchInput.value.trim() 
+    ? 'rgba(255, 255, 255, 0.8)'
+    : totalResults === 0 
+      ? '#ff6b6b'
+      : '#00d4aa';
+  
+  // Animate stats update
+  searchStats.style.transition = 'all 0.3s ease';
+  searchStats.style.opacity = '0';
+  searchStats.style.transform = 'translateY(-10px)';
+  
+  setTimeout(() => {
+    searchStats.textContent = statsText;
+    searchStats.style.color = statsColor;
+    searchStats.style.opacity = '1';
+    searchStats.style.transform = 'translateY(0)';
+  }, 150);
 }
 
-// Clear search
+// Enhanced clear search with animation
 function clearSearch() {
   searchInput.value = '';
+  
+  // Animate clear button
+  clearButton.style.transform = 'translateY(-50%) scale(0.8) rotate(90deg)';
+  clearButton.style.opacity = '0.5';
+  
+  setTimeout(() => {
+    clearButton.style.display = 'none';
+    clearButton.style.transform = 'translateY(-50%) scale(1) rotate(0deg)';
+    clearButton.style.opacity = '1';
+  }, 200);
+  
   removeHighlights();
-  allRows.forEach(row => row.classList.remove('hidden-row'));
-  clearButton.style.display = 'none';
+  
+  // Show all rows with stagger animation
+  allRows.forEach((row, index) => {
+    row.classList.remove('hidden-row');
+    row.style.opacity = '0';
+    row.style.transform = 'translateY(10px)';
+    
+    setTimeout(() => {
+      row.style.transition = 'all 0.3s ease';
+      row.style.opacity = '1';
+      row.style.transform = 'translateY(0)';
+    }, index * 15);
+  });
+  
   updateSearchStats();
   searchInput.focus();
 }
 
 // Event listeners
 if (searchInput) {
-  searchInput.addEventListener('input', debounce(performSearch, 300));
+  searchInput.addEventListener('input', debounce(performSearch, 250));
 }
 
 if (clearButton) {
   clearButton.addEventListener('click', clearSearch);
 }
 
-// Keyboard shortcuts for search
+// Enhanced keyboard shortcuts
 document.addEventListener('keydown', function(e) {
   // Ctrl/Cmd + F to focus search
   if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
@@ -652,6 +1030,11 @@ document.addEventListener('keydown', function(e) {
     if (searchInput) {
       searchInput.focus();
       searchInput.select();
+      // Add focus animation
+      searchInput.style.transform = 'translateY(-3px) scale(1.02)';
+      setTimeout(() => {
+        searchInput.style.transform = 'translateY(-2px) scale(1)';
+      }, 200);
     }
   }
   
@@ -659,5 +1042,34 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && document.activeElement === searchInput) {
     clearSearch();
   }
+  
+  // Ctrl/Cmd + K for quick search (popular shortcut)
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.select();
+    }
+  }
 });
+
+// Add CSS for additional animations
+const additionalStyles = `
+  .search-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  }
+  
+  /* Smooth transitions for interactive elements */
+  table tr, .search-container, kbd {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+`;
+
+// Inject additional styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalStyles;
+document.head.appendChild(styleSheet);
 </script>
+
+---
