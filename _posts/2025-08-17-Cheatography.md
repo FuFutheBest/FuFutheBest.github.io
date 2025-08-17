@@ -10,9 +10,90 @@ tags:
 excerpt: "A comprehensive cheat sheet for keybindings across Gnome, WezTerm, and Neovim"
 ---
 
-<!-- markdownlint-disable MD033 -->
+<!-- Search Bar Styles -->
+<style>
+.search-container {
+  position: sticky;
+  top: 60px;
+  z-index: 1000;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  border: 2px solid #e3f2fd;
+}
 
-# 🎮 Personal Keybindings Cheat Sheet
+.search-box {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.search-box:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.search-stats {
+  margin-top: 10px;
+  color: #7f8c8d;
+  font-size: 14px;
+  text-align: center;
+}
+
+.clear-search {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-size: 12px;
+  display: none;
+}
+
+.highlight {
+  background-color: #fff3cd;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+  border: 1px solid #ffeaa7;
+}
+
+.hidden-row {
+  display: none;
+}
+
+tr:hover {
+  background-color: #f8f9ff;
+}
+</style>
+
+<!-- Search Bar -->
+<div class="search-container">
+  <div style="position: relative;">
+    <input 
+      type="text" 
+      id="searchInput" 
+      class="search-box" 
+      placeholder="🔍 Search shortcuts, actions, or descriptions... (e.g., 'split', 'SUPER+B', 'terminal')"
+      autocomplete="off"
+    >
+    <button id="clearSearch" class="clear-search" title="Clear search">×</button>
+  </div>
+  <div id="searchStats" class="search-stats"></div>
+</div>
 
 A comprehensive reference for all my customized keyboard shortcuts across different applications.
 
@@ -421,4 +502,162 @@ A comprehensive reference for all my customized keyboard shortcuts across differ
 
 ---
 
-<!-- markdownlint-enable MD033 -->
+<!-- Search Functionality -->
+<script>
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+const clearButton = document.getElementById('clearSearch');
+const searchStats = document.getElementById('searchStats');
+let allRows = [];
+let totalResults = 0;
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all table rows except headers
+  allRows = Array.from(document.querySelectorAll('tr')).filter(row => {
+    return !row.querySelector('th') && row.cells && row.cells.length > 0;
+  });
+  
+  updateSearchStats();
+});
+
+// Debounce function to improve performance
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Remove previous highlights
+function removeHighlights() {
+  document.querySelectorAll('.highlight').forEach(el => {
+    const parent = el.parentNode;
+    parent.replaceChild(document.createTextNode(el.textContent), el);
+    parent.normalize();
+  });
+}
+
+// Highlight search terms
+function highlightText(element, searchTerm) {
+  if (!searchTerm.trim()) return;
+  
+  const textNodes = [];
+  const walker = document.createTreeWalker(
+    element,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+  
+  let node;
+  while (node = walker.nextNode()) {
+    textNodes.push(node);
+  }
+  
+  textNodes.forEach(textNode => {
+    const text = textNode.textContent;
+    const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    
+    if (regex.test(text)) {
+      const highlightedHTML = text.replace(regex, '<span class="highlight">$1</span>');
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = highlightedHTML;
+      
+      while (wrapper.firstChild) {
+        textNode.parentNode.insertBefore(wrapper.firstChild, textNode);
+      }
+      textNode.remove();
+    }
+  });
+}
+
+// Search function
+function performSearch() {
+  const searchTerm = searchInput.value.toLowerCase().trim();
+  removeHighlights();
+  totalResults = 0;
+
+  if (!searchTerm) {
+    // Show all rows if search is empty
+    allRows.forEach(row => {
+      row.classList.remove('hidden-row');
+    });
+    clearButton.style.display = 'none';
+    updateSearchStats();
+    return;
+  }
+
+  clearButton.style.display = 'block';
+
+  allRows.forEach(row => {
+    const rowText = row.textContent.toLowerCase();
+    const isMatch = rowText.includes(searchTerm);
+    
+    if (isMatch) {
+      row.classList.remove('hidden-row');
+      highlightText(row, searchTerm);
+      totalResults++;
+    } else {
+      row.classList.add('hidden-row');
+    }
+  });
+
+  updateSearchStats();
+}
+
+// Update search statistics
+function updateSearchStats() {
+  if (!searchInput.value.trim()) {
+    searchStats.textContent = `Ready to search ${allRows.length} shortcuts`;
+    searchStats.style.color = '#7f8c8d';
+  } else if (totalResults === 0) {
+    searchStats.textContent = 'No results found';
+    searchStats.style.color = '#e74c3c';
+  } else {
+    searchStats.textContent = `Found ${totalResults} result${totalResults !== 1 ? 's' : ''}`;
+    searchStats.style.color = '#27ae60';
+  }
+}
+
+// Clear search
+function clearSearch() {
+  searchInput.value = '';
+  removeHighlights();
+  allRows.forEach(row => row.classList.remove('hidden-row'));
+  clearButton.style.display = 'none';
+  updateSearchStats();
+  searchInput.focus();
+}
+
+// Event listeners
+if (searchInput) {
+  searchInput.addEventListener('input', debounce(performSearch, 300));
+}
+
+if (clearButton) {
+  clearButton.addEventListener('click', clearSearch);
+}
+
+// Keyboard shortcuts for search
+document.addEventListener('keydown', function(e) {
+  // Ctrl/Cmd + F to focus search
+  if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+    e.preventDefault();
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.select();
+    }
+  }
+  
+  // Escape to clear search
+  if (e.key === 'Escape' && document.activeElement === searchInput) {
+    clearSearch();
+  }
+});
+</script>
