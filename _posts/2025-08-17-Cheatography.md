@@ -432,15 +432,6 @@ kbd:hover {
 
 <!-- 🎮 Personal Keybindings Cheat Sheet -->
 
-<div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; border: 2px solid #dee2e6;">
-  <p style="font-size: 1.2em; color: #495057; margin: 0; font-weight: 500;">
-    ⚡ A comprehensive reference for all my customized keyboard shortcuts across different applications
-  </p>
-  <p style="font-size: 0.95em; color: #6c757d; margin: 10px 0 0 0; font-style: italic;">
-    💡 Boost your productivity with lightning-fast navigation and control
-  </p>
-</div>
-
 > 📝 **Legend & Quick Guide**:
 >
 > <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 15px 0;">
