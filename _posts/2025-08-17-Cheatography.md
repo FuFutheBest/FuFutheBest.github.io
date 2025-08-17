@@ -24,12 +24,19 @@ body {
   top: 70px;
   z-index: 1000;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 25px;
+  padding: 25px 25px 15px 25px; /* Reduced bottom padding */
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
   margin-bottom: 40px;
   border: none;
   backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+/* When search results are shown, adjust container */
+.search-container.has-results {
+  padding-bottom: 25px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
 }
 
 .search-box {
@@ -310,6 +317,92 @@ kbd:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
+
+/* Search Results Container */
+.search-results {
+  position: relative;
+  margin: 20px 0 0 0;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  overflow: hidden;
+  display: none;
+  max-height: 60vh; /* Use viewport height for better responsiveness */
+  overflow-y: auto;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.search-results.show {
+  display: block;
+  animation: slideDown 0.3s ease-out;
+}
+
+.search-results-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 15px 20px;
+  font-weight: 600;
+  font-size: 1.1em;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.search-result-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f3f4;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background: linear-gradient(135deg, #f8f9ff, #e8f4f8);
+  transform: translateX(5px);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-shortcut {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.search-result-action {
+  color: #34495e;
+  font-size: 0.95em;
+  margin-bottom: 3px;
+}
+
+.search-result-description {
+  color: #7f8c8d;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.search-result-category {
+  display: inline-block;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
 
 <!-- Search Bar -->
@@ -325,9 +418,19 @@ kbd:hover {
     <button id="clearSearch" class="clear-search" title="Clear search">×</button>
   </div>
   <div id="searchStats" class="search-stats"></div>
+  
+  <!-- Search Results Container (inside search container) -->
+  <div id="searchResults" class="search-results">
+    <div class="search-results-header">
+      <span id="searchResultsTitle">Search Results</span>
+    </div>
+    <div id="searchResultsList">
+      <!-- Search results will be dynamically populated here -->
+    </div>
+  </div>
 </div>
 
-# 🎮 Personal Keybindings Cheat Sheet
+<!-- 🎮 Personal Keybindings Cheat Sheet -->
 
 <div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; border: 2px solid #dee2e6;">
   <p style="font-size: 1.2em; color: #495057; margin: 0; font-weight: 500;">
@@ -762,11 +865,16 @@ kbd:hover {
 
 <!-- Search Functionality -->
 <script>
-// Enhanced search functionality (without click-to-copy)
+// Enhanced search functionality with results display
 const searchInput = document.getElementById('searchInput');
 const clearButton = document.getElementById('clearSearch');
 const searchStats = document.getElementById('searchStats');
+const searchResults = document.getElementById('searchResults');
+const searchResultsList = document.getElementById('searchResultsList');
+const searchResultsTitle = document.getElementById('searchResultsTitle');
+const searchContainer = document.querySelector('.search-container');
 let allRows = [];
+let allShortcuts = [];
 let totalResults = 0;
 let searchHistory = [];
 
@@ -777,11 +885,51 @@ document.addEventListener('DOMContentLoaded', function() {
     return !row.querySelector('th') && row.cells && row.cells.length > 0;
   });
   
+  // Extract shortcuts data for search results display
+  extractShortcutsData();
   updateSearchStats();
   initializeEnhancements();
 });
 
-// Initialize additional enhancements (without click-to-copy)
+// Extract shortcuts data from tables
+function extractShortcutsData() {
+  allShortcuts = [];
+  
+  // Find all sections (h2, h3, h4) and their following tables
+  const sections = document.querySelectorAll('h2, h3, h4');
+  
+  sections.forEach(section => {
+    const sectionText = section.textContent.trim();
+    let nextElement = section.nextElementSibling;
+    
+    // Look for the next table after this section
+    while (nextElement && nextElement.tagName !== 'TABLE') {
+      nextElement = nextElement.nextElementSibling;
+      if (nextElement && (nextElement.tagName === 'H2' || nextElement.tagName === 'H3' || nextElement.tagName === 'H4')) {
+        break; // Hit another section, stop looking
+      }
+    }
+    
+    if (nextElement && nextElement.tagName === 'TABLE') {
+      const rows = nextElement.querySelectorAll('tbody tr, tr:not(:first-child)');
+      
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 3) {
+          allShortcuts.push({
+            shortcut: cells[0].textContent.trim(),
+            action: cells[1].textContent.trim(),
+            description: cells[2].textContent.trim(),
+            category: sectionText,
+            element: row
+          });
+        }
+      });
+    }
+  });
+}
+
+// Initialize additional enhancements
 function initializeEnhancements() {
   // Add loading animation to search box
   searchInput.addEventListener('focus', function() {
@@ -792,21 +940,14 @@ function initializeEnhancements() {
     this.style.transform = 'translateY(0)';
   });
   
-  // Add smooth scroll to first result
+  // Add smooth scroll to original table when clicking search result
   searchInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && totalResults > 0) {
-      const firstVisibleRow = allRows.find(row => !row.classList.contains('hidden-row'));
-      if (firstVisibleRow) {
-        firstVisibleRow.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'center' 
-        });
-        // Add temporary highlight to first result
-        firstVisibleRow.style.animation = 'highlightPulse 2s ease-in-out';
-        setTimeout(() => {
-          firstVisibleRow.style.animation = '';
-        }, 2000);
-      }
+      // Scroll to search results container
+      searchResults.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
     }
   });
 }
@@ -824,93 +965,82 @@ function debounce(func, wait) {
   };
 }
 
-// Remove previous highlights with animation
-function removeHighlights() {
-  document.querySelectorAll('.highlight').forEach(el => {
-    el.style.transition = 'all 0.3s ease';
-    el.style.opacity = '0';
-    el.style.transform = 'scale(0.8)';
-    
-    setTimeout(() => {
-      const parent = el.parentNode;
-      parent.replaceChild(document.createTextNode(el.textContent), el);
-      parent.normalize();
-    }, 300);
-  });
-}
-
-// Enhanced highlight with animation
-function highlightText(element, searchTerm) {
-  if (!searchTerm.trim()) return;
+// Display search results in the dedicated container
+function displaySearchResults(searchTerm, matchingShortcuts) {
+  searchResultsList.innerHTML = '';
   
-  const textNodes = [];
-  const walker = document.createTreeWalker(
-    element,
-    NodeFilter.SHOW_TEXT,
-    null,
-    false
-  );
-  
-  let node;
-  while (node = walker.nextNode()) {
-    textNodes.push(node);
+  if (matchingShortcuts.length === 0) {
+    searchResults.classList.remove('show');
+    searchContainer.classList.remove('has-results');
+    return;
   }
   
-  textNodes.forEach(textNode => {
-    const text = textNode.textContent;
-    const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-    
-    if (regex.test(text)) {
-      const highlightedHTML = text.replace(regex, '<span class="highlight" style="opacity: 0; transform: scale(0.8);">$1</span>');
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = highlightedHTML;
-      
-      while (wrapper.firstChild) {
-        textNode.parentNode.insertBefore(wrapper.firstChild, textNode);
-      }
-      textNode.remove();
-    }
-  });
+  searchResults.classList.add('show');
+  searchContainer.classList.add('has-results');
+  searchResultsTitle.textContent = `Search Results for "${searchTerm}"`;
   
-  // Animate highlights
-  setTimeout(() => {
-    document.querySelectorAll('.highlight').forEach((highlight, index) => {
+  matchingShortcuts.forEach((shortcut, index) => {
+    const resultItem = document.createElement('div');
+    resultItem.className = 'search-result-item';
+    resultItem.style.animationDelay = `${index * 0.05}s`;
+    
+    // Highlight matching text
+    const highlightedShortcut = highlightMatchingText(shortcut.shortcut, searchTerm);
+    const highlightedAction = highlightMatchingText(shortcut.action, searchTerm);
+    const highlightedDescription = highlightMatchingText(shortcut.description, searchTerm);
+    
+    resultItem.innerHTML = `
+      <div class="search-result-shortcut">${highlightedShortcut}</div>
+      <div class="search-result-action">${highlightedAction}</div>
+      <div class="search-result-description">${highlightedDescription}</div>
+      <div class="search-result-category">${shortcut.category}</div>
+    `;
+    
+    // Add click handler to scroll to original table row
+    resultItem.addEventListener('click', function() {
+      shortcut.element.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+      
+      // Highlight the original row temporarily
+      shortcut.element.style.backgroundColor = '#fff3cd';
+      shortcut.element.style.transform = 'scale(1.02)';
+      
       setTimeout(() => {
-        highlight.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-        highlight.style.opacity = '1';
-        highlight.style.transform = 'scale(1)';
-      }, index * 50);
+        shortcut.element.style.backgroundColor = '';
+        shortcut.element.style.transform = '';
+      }, 2000);
     });
-  }, 100);
+    
+    searchResultsList.appendChild(resultItem);
+  });
 }
 
-// Enhanced search function with animations
+// Highlight matching text in search results
+function highlightMatchingText(text, searchTerm) {
+  if (!searchTerm.trim()) return text;
+  
+  const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+// Enhanced search function
 function performSearch() {
   const searchTerm = searchInput.value.toLowerCase().trim();
   
   // Add to search history
   if (searchTerm && !searchHistory.includes(searchTerm)) {
     searchHistory.unshift(searchTerm);
-    searchHistory = searchHistory.slice(0, 10); // Keep last 10 searches
+    searchHistory = searchHistory.slice(0, 10);
   }
   
-  removeHighlights();
   totalResults = 0;
 
   if (!searchTerm) {
-    // Show all rows with fade-in animation
-    allRows.forEach((row, index) => {
-      row.classList.remove('hidden-row');
-      row.style.opacity = '0';
-      row.style.transform = 'translateY(10px)';
-      
-      setTimeout(() => {
-        row.style.transition = 'all 0.3s ease';
-        row.style.opacity = '1';
-        row.style.transform = 'translateY(0)';
-      }, index * 20);
-    });
-    
+    // Hide search results container
+    searchResults.classList.remove('show');
+    searchContainer.classList.remove('has-results');
     clearButton.style.display = 'none';
     updateSearchStats();
     return;
@@ -918,48 +1048,26 @@ function performSearch() {
 
   clearButton.style.display = 'block';
 
-  // Search with animations
-  allRows.forEach((row, index) => {
-    const rowText = row.textContent.toLowerCase();
-    const isMatch = rowText.includes(searchTerm);
-    
-    if (isMatch) {
-      row.classList.remove('hidden-row');
-      highlightText(row, searchTerm);
-      totalResults++;
-      
-      // Animate visible rows
-      row.style.opacity = '0';
-      row.style.transform = 'translateX(-20px)';
-      
-      setTimeout(() => {
-        row.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-        row.style.opacity = '1';
-        row.style.transform = 'translateX(0)';
-      }, index * 30);
-    } else {
-      // Animate hiding rows
-      row.style.transition = 'all 0.3s ease';
-      row.style.opacity = '0';
-      row.style.transform = 'translateX(20px)';
-      
-      setTimeout(() => {
-        row.classList.add('hidden-row');
-        row.style.transform = 'translateX(0)';
-      }, 300);
-    }
+  // Search through shortcuts data
+  const matchingShortcuts = allShortcuts.filter(shortcut => {
+    const searchText = `${shortcut.shortcut} ${shortcut.action} ${shortcut.description} ${shortcut.category}`.toLowerCase();
+    return searchText.includes(searchTerm);
   });
 
+  totalResults = matchingShortcuts.length;
+  
+  // Display results in the dedicated container
+  displaySearchResults(searchTerm, matchingShortcuts);
   updateSearchStats();
 }
 
 // Enhanced search statistics with animations
 function updateSearchStats() {
   const statsText = !searchInput.value.trim() 
-    ? `Ready to search ${allRows.length} shortcuts`
+    ? `Ready to search ${allShortcuts.length} shortcuts`
     : totalResults === 0 
       ? 'No results found - try different keywords'
-      : `Found ${totalResults} result${totalResults !== 1 ? 's' : ''} • Press Enter to jump to first`;
+      : `Found ${totalResults} result${totalResults !== 1 ? 's' : ''} • Click any result to jump to original`;
   
   const statsColor = !searchInput.value.trim() 
     ? 'rgba(255, 255, 255, 0.8)'
@@ -994,20 +1102,9 @@ function clearSearch() {
     clearButton.style.opacity = '1';
   }, 200);
   
-  removeHighlights();
-  
-  // Show all rows with stagger animation
-  allRows.forEach((row, index) => {
-    row.classList.remove('hidden-row');
-    row.style.opacity = '0';
-    row.style.transform = 'translateY(10px)';
-    
-    setTimeout(() => {
-      row.style.transition = 'all 0.3s ease';
-      row.style.opacity = '1';
-      row.style.transform = 'translateY(0)';
-    }, index * 15);
-  });
+  // Hide search results
+  searchResults.classList.remove('show');
+  searchContainer.classList.remove('has-results');
   
   updateSearchStats();
   searchInput.focus();
@@ -1060,9 +1157,24 @@ const additionalStyles = `
     box-shadow: 0 12px 40px rgba(0,0,0,0.2);
   }
   
+  .search-result-item {
+    animation: fadeInUp 0.4s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
   /* Smooth transitions for interactive elements */
-  table tr, .search-container, kbd {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  table tr, .search-container, kbd, .search-result-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
   }
 `;
 
