@@ -855,15 +855,49 @@ kbd:hover {
 ---
 
 <!-- Search Functionality -->
-<script>
+<script type="text/javascript">
+/* <![CDATA[ */
 // Enhanced search functionality with results display
-const searchInput = document.getElementById('searchInput');
-const clearButton = document.getElementById('clearSearch');
-const searchStats = document.getElementById('searchStats');
-const searchResults = document.getElementById('searchResults');
-const searchResultsList = document.getElementById('searchResultsList');
-const searchResultsTitle = document.getElementById('searchResultsTitle');
-const searchContainer = document.querySelector('.search-container');
+// Debug logging for GitHub Pages
+console.log('Search script loaded');
+
+// Global error handling
+window.addEventListener('error', function(e) {
+  console.error('JavaScript error in search script:', e.error);
+});
+
+// Safer element selection with error handling
+let searchInput, clearButton, searchStats, searchResults, searchResultsList, searchResultsTitle, searchContainer;
+
+function initializeElements() {
+  // Try multiple methods to find elements
+  searchInput = document.getElementById('searchInput') || document.querySelector('#searchInput') || document.querySelector('.search-box');
+  clearButton = document.getElementById('clearSearch') || document.querySelector('#clearSearch') || document.querySelector('.clear-search');
+  searchStats = document.getElementById('searchStats') || document.querySelector('#searchStats') || document.querySelector('.search-stats');
+  searchResults = document.getElementById('searchResults') || document.querySelector('#searchResults') || document.querySelector('.search-results');
+  searchResultsList = document.getElementById('searchResultsList') || document.querySelector('#searchResultsList');
+  searchResultsTitle = document.getElementById('searchResultsTitle') || document.querySelector('#searchResultsTitle');
+  searchContainer = document.querySelector('.search-container');
+  
+  console.log('Elements found:', {
+    searchInput: !!searchInput,
+    clearButton: !!clearButton,
+    searchStats: !!searchStats,
+    searchResults: !!searchResults,
+    searchResultsList: !!searchResultsList,
+    searchResultsTitle: !!searchResultsTitle,
+    searchContainer: !!searchContainer
+  });
+  
+  // Also log the actual elements for debugging
+  if (searchInput) console.log('Search input element:', searchInput);
+  if (!searchInput) {
+    console.log('All input elements:', document.querySelectorAll('input'));
+    console.log('All elements with search-box class:', document.querySelectorAll('.search-box'));
+  }
+  
+  return searchInput && clearButton && searchStats && searchResults;
+}
 let allRows = [];
 let allShortcuts = [];
 let totalResults = 0;
@@ -871,16 +905,123 @@ let searchHistory = [];
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM loaded, initializing search...');
+  attemptInitialization();
+});
+
+// Also try when window fully loads (including all resources)
+window.addEventListener('load', function() {
+  console.log('Window fully loaded, attempting search initialization...');
+  if (!searchInput) {
+    attemptInitialization();
+  }
+});
+
+function attemptInitialization() {
+  // Wait a bit more for Jekyll to fully render
+  setTimeout(function() {
+    if (!initializeElements()) {
+      console.error('Search elements not found. Retrying in 1 second...');
+      setTimeout(function() {
+        if (initializeElements()) {
+          startSearch();
+        } else {
+          console.error('Search elements still not found after retry');
+          // Try one more time with longer delay
+          setTimeout(function() {
+            if (initializeElements()) {
+              startSearch();
+            } else {
+              console.error('Final attempt failed - trying fallback initialization');
+              fallbackInitialization();
+            }
+          }, 2000);
+        }
+      }, 1000);
+      return;
+    }
+    
+    startSearch();
+  }, 500);
+}
+
+function startSearch() {
+  console.log('Starting search initialization...');
+  
   // Get all table rows except headers
   allRows = Array.from(document.querySelectorAll('tr')).filter(row => {
     return !row.querySelector('th') && row.cells && row.cells.length > 0;
   });
   
+  console.log('Found table rows:', allRows.length);
+  
   // Extract shortcuts data for search results display
   extractShortcutsData();
+  
+  initializeSearch();
+}
+
+// Fallback initialization for cases where normal initialization fails
+function fallbackInitialization() {
+  console.log('Attempting fallback initialization...');
+  
+  // Try to find search input with any method possible
+  const possibleInputs = [
+    document.getElementById('searchInput'),
+    document.querySelector('#searchInput'),
+    document.querySelector('input[placeholder*="Search"]'),
+    document.querySelector('.search-box'),
+    document.querySelector('input[type="text"]')
+  ].filter(Boolean);
+  
+  if (possibleInputs.length > 0) {
+    searchInput = possibleInputs[0];
+    console.log('Found search input via fallback method');
+    
+    // Add minimal search functionality
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase().trim();
+      const tables = document.querySelectorAll('table');
+      
+      tables.forEach(table => {
+        const rows = table.querySelectorAll('tr');
+        rows.forEach(row => {
+          if (row.querySelector('th')) return; // Skip header rows
+          
+          const text = row.textContent.toLowerCase();
+          if (searchTerm === '' || text.includes(searchTerm)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    console.log('Fallback search functionality initialized');
+  } else {
+    console.error('Could not find search input even with fallback methods');
+  }
+}
+
+function initializeSearch() {
+  console.log('Initializing search functionality...');
   updateSearchStats();
   initializeEnhancements();
-});
+  
+  // Event listeners
+  if (searchInput) {
+    console.log('Adding input event listener to search box');
+    searchInput.addEventListener('input', debounce(performSearch, 250));
+  }
+
+  if (clearButton) {
+    console.log('Adding click event listener to clear button');
+    clearButton.addEventListener('click', clearSearch);
+  }
+  
+  console.log('Search initialization complete');
+}
 
 // Extract shortcuts data from tables
 function extractShortcutsData() {
@@ -922,6 +1063,13 @@ function extractShortcutsData() {
 
 // Initialize additional enhancements
 function initializeEnhancements() {
+  if (!searchInput) {
+    console.error('Cannot initialize enhancements - searchInput not found');
+    return;
+  }
+  
+  console.log('Initializing search enhancements...');
+  
   // Add loading animation to search box
   searchInput.addEventListener('focus', function() {
     this.style.transform = 'translateY(-2px)';
@@ -935,12 +1083,16 @@ function initializeEnhancements() {
   searchInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && totalResults > 0) {
       // Scroll to search results container
-      searchResults.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+      if (searchResults) {
+        searchResults.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
     }
   });
+  
+  console.log('Search enhancements initialized');
 }
 
 // Debounce function to improve performance
@@ -1018,6 +1170,11 @@ function highlightMatchingText(text, searchTerm) {
 
 // Enhanced search function
 function performSearch() {
+  if (!searchInput) {
+    console.warn('Cannot perform search - searchInput not found');
+    return;
+  }
+  
   const searchTerm = searchInput.value.toLowerCase().trim();
   
   // Add to search history
@@ -1054,13 +1211,19 @@ function performSearch() {
 
 // Enhanced search statistics with animations
 function updateSearchStats() {
-  const statsText = !searchInput.value.trim() 
+  if (!searchInput || !searchStats) {
+    console.warn('Cannot update search stats - elements not found');
+    return;
+  }
+  
+  const searchValue = searchInput.value ? searchInput.value.trim() : '';
+  const statsText = !searchValue 
     ? `Ready to search ${allShortcuts.length} shortcuts`
     : totalResults === 0 
       ? 'No results found - try different keywords'
       : `Found ${totalResults} result${totalResults !== 1 ? 's' : ''} • Click any result to jump to original`;
   
-  const statsColor = !searchInput.value.trim() 
+  const statsColor = !searchValue 
     ? 'rgba(255, 255, 255, 0.8)'
     : totalResults === 0 
       ? '#ff6b6b'
@@ -1081,33 +1244,37 @@ function updateSearchStats() {
 
 // Enhanced clear search with animation
 function clearSearch() {
+  if (!searchInput) {
+    console.warn('Cannot clear search - searchInput not found');
+    return;
+  }
+  
   searchInput.value = '';
   
   // Animate clear button
-  clearButton.style.transform = 'translateY(-50%) scale(0.8) rotate(90deg)';
-  clearButton.style.opacity = '0.5';
-  
-  setTimeout(() => {
-    clearButton.style.display = 'none';
-    clearButton.style.transform = 'translateY(-50%) scale(1) rotate(0deg)';
-    clearButton.style.opacity = '1';
-  }, 200);
+  if (clearButton) {
+    clearButton.style.transform = 'translateY(-50%) scale(0.8) rotate(90deg)';
+    clearButton.style.opacity = '0.5';
+    
+    setTimeout(() => {
+      clearButton.style.display = 'none';
+      clearButton.style.transform = 'translateY(-50%) scale(1) rotate(0deg)';
+      clearButton.style.opacity = '1';
+    }, 200);
+  }
   
   // Hide search results
-  searchResults.classList.remove('show');
-  searchContainer.classList.remove('has-results');
+  if (searchResults) {
+    searchResults.classList.remove('show');
+  }
+  if (searchContainer) {
+    searchContainer.classList.remove('has-results');
+  }
   
   updateSearchStats();
-  searchInput.focus();
-}
-
-// Event listeners
-if (searchInput) {
-  searchInput.addEventListener('input', debounce(performSearch, 250));
-}
-
-if (clearButton) {
-  clearButton.addEventListener('click', clearSearch);
+  if (searchInput) {
+    searchInput.focus();
+  }
 }
 
 // Enhanced keyboard shortcuts
@@ -1173,6 +1340,34 @@ const additionalStyles = `
 const styleSheet = document.createElement('style');
 styleSheet.textContent = additionalStyles;
 document.head.appendChild(styleSheet);
+
+// Test function to verify basic functionality
+function testSearchFunctionality() {
+  console.log('Testing search functionality...');
+  console.log('Document ready state:', document.readyState);
+  console.log('Number of input elements:', document.querySelectorAll('input').length);
+  console.log('Number of elements with search-box class:', document.querySelectorAll('.search-box').length);
+  console.log('Number of table rows:', document.querySelectorAll('tr').length);
+  
+  // Test element finding
+  const testInput = document.getElementById('searchInput');
+  console.log('Test getElementById for searchInput:', !!testInput);
+  
+  if (testInput) {
+    console.log('Search input found and working!');
+  } else {
+    console.log('Search input not found - debugging...');
+    const allInputs = document.querySelectorAll('input');
+    allInputs.forEach((input, index) => {
+      console.log(`Input ${index}:`, input.id, input.className, input.placeholder);
+    });
+  }
+}
+
+// Run test after a delay
+setTimeout(testSearchFunctionality, 3000);
+
+/* ]]> */
 </script>
 
 ---
