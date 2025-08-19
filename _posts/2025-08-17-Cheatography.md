@@ -852,6 +852,54 @@ kbd:hover {
 | **Change** | `<b>or tag* types</b>`     | `csth1<CR>` | `<h1>or tag types</h1>` |
 | **Delete** | `delete(functi*on calls)`  | `dsf`       | `function calls`        |
 
+### 🌟 Git Integration
+
+> **GitSigns + LazyGit** - Comprehensive Git workflow
+
+#### 🔍 Git Navigation & Status
+
+| Shortcut      | Action        | Description                  |
+| ------------- | ------------- | ---------------------------- |
+| <kbd>]h</kbd> | Next Hunk     | Jump to next git hunk 🔧     |
+| <kbd>[h</kbd> | Previous Hunk | Jump to previous git hunk 🔧 |
+
+#### 🎯 Git Actions
+
+| Shortcut                          | Action          | Description             |
+| --------------------------------- | --------------- | ----------------------- |
+| <kbd>LEADER</kbd> + <kbd>hs</kbd> | Stage Hunk      | Stage current hunk 🔧   |
+| <kbd>LEADER</kbd> + <kbd>hr</kbd> | Reset Hunk      | Reset current hunk 🔧   |
+| <kbd>LEADER</kbd> + <kbd>hS</kbd> | Stage Buffer    | Stage entire buffer 🔧  |
+| <kbd>LEADER</kbd> + <kbd>hR</kbd> | Reset Buffer    | Reset entire buffer 🔧  |
+| <kbd>LEADER</kbd> + <kbd>hu</kbd> | Undo Stage Hunk | Undo staging of hunk 🔧 |
+
+#### 👁️ Git Preview & Info
+
+| Shortcut                          | Action       | Description                     |
+| --------------------------------- | ------------ | ------------------------------- |
+| <kbd>LEADER</kbd> + <kbd>hp</kbd> | Preview Hunk | Preview git hunk changes 🔧     |
+| <kbd>LEADER</kbd> + <kbd>hb</kbd> | Blame Line   | Show full git blame for line 🔧 |
+| <kbd>LEADER</kbd> + <kbd>hB</kbd> | Toggle Blame | Toggle line blame display 🔧    |
+
+#### 🔄 Git Diff
+
+| Shortcut                          | Action        | Description                       |
+| --------------------------------- | ------------- | --------------------------------- |
+| <kbd>LEADER</kbd> + <kbd>hd</kbd> | Diff This     | Show git diff for current file 🔧 |
+| <kbd>LEADER</kbd> + <kbd>hD</kbd> | Diff This (~) | Show git diff against HEAD~ 🔧    |
+
+#### 🎯 Git Text Objects
+
+| Shortcut      | Action      | Description                       |
+| ------------- | ----------- | --------------------------------- |
+| <kbd>ih</kbd> | Select Hunk | Select git hunk as text object 🔧 |
+
+#### 🚀 LazyGit Integration
+
+| Shortcut                          | Action       | Description           |
+| --------------------------------- | ------------ | --------------------- |
+| <kbd>LEADER</kbd> + <kbd>lg</kbd> | Open LazyGit | Launch LazyGit TUI 🔧 |
+
 ---
 
 <!-- Search Functionality -->
