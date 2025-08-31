@@ -431,28 +431,28 @@ kbd:hover {
 
 <!-- 🎮 Personal Keybindings Cheat Sheet -->
 
-> 📝 **Legend & Quick Guide**:
->
-> <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 15px 0;">
->   <div style="background: #e8f4f8; padding: 12px; border-radius: 8px; border-left: 4px solid #3498db;">
->     <strong>🔑 Key Symbols:</strong><br>
->     <kbd>SUPER</kbd> = Windows/Cmd key<br>
->     <kbd>LEADER</kbd> = Leader key sequence
->   </div>
->   <div style="background: #fff3e0; padding: 12px; border-radius: 8px; border-left: 4px solid #ff9800;">
->     <strong>⚙️ Configuration:</strong><br>
->     Actions marked with 🔧 are custom configurations
->   </div>
-> </div>
->
-> <div style="background: #f0f8e8; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin-top: 15px;">
->   <strong>💡 Pro Tips:</strong>
->   <ul style="margin: 8px 0 0 0; padding-left: 20px;">
->     <li>Use <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd> to quickly focus the search box above</li>
->     <li>Search by application name, key combination, or action description</li>
->     <li>Press <kbd>Esc</kbd> to clear search and show all shortcuts</li>
->   </ul>
-> </div>
+<!-- > 📝 **Legend & Quick Guide**: -->
+<!-- > -->
+<!-- > <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 15px 0;"> -->
+<!-- >   <div style="background: #e8f4f8; padding: 12px; border-radius: 8px; border-left: 4px solid #3498db;"> -->
+<!-- >     <strong>🔑 Key Symbols:</strong><br> -->
+<!-- >     <kbd>SUPER</kbd> = Windows/Cmd key<br> -->
+<!-- >     <kbd>LEADER</kbd> = Leader key sequence -->
+<!-- >   </div> -->
+<!-- >   <div style="background: #fff3e0; padding: 12px; border-radius: 8px; border-left: 4px solid #ff9800;"> -->
+<!-- >     <strong>⚙️ Configuration:</strong><br> -->
+<!-- >     Actions marked with 🔧 are custom configurations -->
+<!-- >   </div> -->
+<!-- > </div> -->
+<!-- > -->
+<!-- > <div style="background: #f0f8e8; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50; margin-top: 15px;"> -->
+<!-- >   <strong>💡 Pro Tips:</strong> -->
+<!-- >   <ul style="margin: 8px 0 0 0; padding-left: 20px;"> -->
+<!-- >     <li>Use <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd> to quickly focus the search box above</li> -->
+<!-- >     <li>Search by application name, key combination, or action description</li> -->
+<!-- >     <li>Press <kbd>Esc</kbd> to clear search and show all shortcuts</li> -->
+<!-- >   </ul> -->
+<!-- > </div> -->
 
 ## 🖥️ Gnome Desktop Environment
 
