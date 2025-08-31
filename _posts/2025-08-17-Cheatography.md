@@ -406,29 +406,28 @@ kbd:hover {
 </style>
 
 <!-- Search Bar -->
-<div class="search-container">
-  <div style="position: relative;">
-    <input 
-      type="text" 
-      id="searchInput" 
-      class="search-box" 
-      placeholder="🔍 Search shortcuts, actions, or descriptions... (try 'split', 'SUPER+B', 'terminal')"
-      autocomplete="off"
-    >
-    <button id="clearSearch" class="clear-search" title="Clear search">×</button>
-  </div>
-  <div id="searchStats" class="search-stats"></div>
-  
+<!-- <div class="search-container"> -->
+<!--   <div style="position: relative;"> -->
+<!--     <input  -->
+<!--       type="text"  -->
+<!--       id="searchInput"  -->
+<!--       class="search-box"  -->
+<!--       placeholder="🔍 Search shortcuts, actions, or descriptions... (try 'split', 'SUPER+B', 'terminal')" -->
+<!--       autocomplete="off" -->
+<!--     > -->
+<!--     <button id="clearSearch" class="clear-search" title="Clear search">×</button> -->
+<!--   </div> -->
+<!--   <div id="searchStats" class="search-stats"></div> -->
+
   <!-- Search Results Container (inside search container) -->
-  <div id="searchResults" class="search-results">
-    <div class="search-results-header">
-      <span id="searchResultsTitle">Search Results</span>
-    </div>
-    <div id="searchResultsList">
-      <!-- Search results will be dynamically populated here -->
-    </div>
-  </div>
-</div>
+<!--   <div id="searchResults" class="search-results"> -->
+<!--     <div class="search-results-header"> -->
+<!--       <span id="searchResultsTitle">Search Results</span> -->
+<!--     </div> -->
+<!--     <div id="searchResultsList"> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
 
 <!-- 🎮 Personal Keybindings Cheat Sheet -->
 
