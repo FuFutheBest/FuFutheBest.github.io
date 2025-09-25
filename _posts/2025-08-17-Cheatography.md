@@ -520,24 +520,25 @@ kbd:hover {
 
 | Shortcut                                          | Action           | Description              |
 | ------------------------------------------------- | ---------------- | ------------------------ |
-| <kbd>SUPER</kbd> + <kbd>L</kbd>                   | Lock Screen      | Lock the screen 🔧       |
+| <kbd>SUPER</kbd> + <kbd>p</kbd>                   | Lock Screen      | Lock the screen 🔧       |
 | <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>DEL</kbd> | Log Out          | Log out of session 🔧    |
 | <kbd>SUPER</kbd> + <kbd>A</kbd>                   | All Applications | Show all applications 🔧 |
 | <kbd>SUPER</kbd> + <kbd>SPACE</kbd>               | Switch Input     | Switch input method 🔧   |
 
 ### 🪟 Window Tiling
 
-| Shortcut                                         | Action     | Description                  |
-| ------------------------------------------------ | ---------- | ---------------------------- |
-| <kbd>SUPER</kbd> + <kbd>RightArrow</kbd>         | Tile Right | Move window to right tile 🔧 |
-| <kbd>SUPER</kbd> + <kbd>LeftArrow</kbd>          | Tile Left  | Move window to left tile 🔧  |
-| <kbd>SUPER</kbd> + <kbd>UpArrow</kbd>            | Tile Up    | Move window to tile above 🔧 |
-| <kbd>SUPER</kbd> + <kbd>DownArrow</kbd>          | Tile Down  | Move window to tile below 🔧 |
-| <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>D</kbd> | Span Right | Span window to right tile 🔧 |
-| <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>A</kbd> | Span Left  | Span window to left tile 🔧  |
-| <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>W</kbd> | Span Up    | Span window above 🔧         |
-| <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>S</kbd> | Span Down  | Span window below 🔧         |
-| <kbd>SUPER</kbd> + <kbd>C</kbd>                  | Untile     | Remove window from tile 🔧   |
+| Shortcut                                           | Action     | Description                  |
+| -------------------------------------------------- | ---------- | ---------------------------- |
+| <kbd>SUPER</kbd> + <kbd>Shift</kbd> + <kbd>h</kbd> | Tile Right | Move window to right tile 🔧 |
+| <kbd>SUPER</kbd> + <kbd>Shift</kbd> + <kbd>l</kbd> | Tile Left  | Move window to left tile 🔧  |
+| <kbd>SUPER</kbd> + <kbd>Shift</kbd> + <kbd>k</kbd> | Tile Up    | Move window to tile above 🔧 |
+| <kbd>SUPER</kbd> + <kbd>Shift</kbd> + <kbd>j</kbd> | Tile Down  | Move window to tile below 🔧 |
+| <kbd>SUPER</kbd> + <kbd>DownArrow</kbd>            | Untile     | Remove window from tile 🔧   |
+
+<!-- | <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>D</kbd> | Span Right | Span window to right tile 🔧 | -->
+<!-- | <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>A</kbd> | Span Left  | Span window to left tile 🔧  | -->
+<!-- | <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>W</kbd> | Span Up    | Span window above 🔧         | -->
+<!-- | <kbd>ALT</kbd> + <kbd>SUPER</kbd> + <kbd>S</kbd> | Span Down  | Span window below 🔧         | -->
 
 #### Window Menu
 
